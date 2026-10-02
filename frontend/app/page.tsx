@@ -316,24 +316,27 @@ export default function HomePage() {
 
                     {/* Right: Editorial Content & Modern Spec Cards */}
                     <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-[#087FEF] bg-white/90 px-3 py-1 rounded-md border border-[#087FEF]/20 shadow-xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#087FEF]"></span>
-                            {service.category}
+                      <div className="relative overflow-hidden">
+                        {/* Watermark category label — behind content via z-index */}
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-x-0 -top-2 z-0 text-[clamp(2.8rem,7vw,5.5rem)] font-black uppercase tracking-tighter text-zinc-900/[0.055] select-none pointer-events-none leading-none whitespace-nowrap overflow-hidden text-ellipsis"
+                        >
+                          {service.category}
+                        </span>
+
+                        <div className="relative z-10">
+                          <h3 className="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-zinc-900 mt-14 mb-1">
+                            {service.name}
+                          </h3>
+                          <span className="text-[11px] font-mono text-zinc-400 mb-3 block">
+                            from UGX {Number(service.base_price).toLocaleString()}
                           </span>
-                          <span className="text-xs font-mono font-bold text-zinc-700">
-                            Starting from UGX {Number(service.base_price).toLocaleString()}
-                          </span>
+
+                          <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed line-clamp-3">
+                            {service.description}
+                          </p>
                         </div>
-
-                        <h3 className="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-zinc-900 mt-2 mb-3">
-                          {service.name}
-                        </h3>
-
-                        <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed line-clamp-3">
-                          {service.description}
-                        </p>
                       </div>
 
                       {/* 2 Refined Specification Cards */}
