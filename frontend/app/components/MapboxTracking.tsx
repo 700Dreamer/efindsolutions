@@ -221,7 +221,8 @@ export function MapboxTracking({
 
     const interval = setInterval(async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/tracking/delivery/${deliveryId}`);
+        const apiBase = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
+        const res = await fetch(`${apiBase}/tracking/delivery/${deliveryId}`);
         if (res.ok) {
           const data = await res.json();
           if (data.latitude && data.longitude) {

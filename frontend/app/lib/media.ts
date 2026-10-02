@@ -18,9 +18,8 @@ export function getServiceImageUrl(imagePath?: string | null, category?: string 
     }
     
     // Relative upload path e.g. /uploads/services/abc.jpg
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
-    // Extract base origin (e.g., http://localhost:8000)
-    const baseOrigin = apiUrl.replace(/\/api\/v1\/?$/, "");
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    const baseOrigin = apiUrl.startsWith("http") ? apiUrl.replace(/\/api\/v1\/?$/, "") : "";
     const formattedPath = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
     return `${baseOrigin}${formattedPath}`;
   }
