@@ -1,0 +1,51 @@
+.text-loop-marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  user-select: none;
+  border-radius: 9999px;
+  padding: 16px 0;
+  box-shadow: 0 10px 30px rgba(8, 127, 239, 0.25);
+}
+
+.text-loop-marquee-container:hover .text-loop-track {
+  animation-play-state: paused;
+}
+
+.text-loop-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  white-space: nowrap;
+  animation: textLoopScroll linear infinite;
+  will-change: transform;
+}
+
+.text-loop-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.text-loop-word {
+  display: inline-block;
+  padding: 0 4px;
+}
+
+.text-loop-sep {
+  display: inline-block;
+  margin: 0 24px;
+  opacity: 0.75;
+  font-size: 0.8em;
+}
+
+@keyframes textLoopScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
