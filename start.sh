@@ -20,6 +20,10 @@ BACKEND_PID=$!
 # 3. Wait for FastAPI Backend to be healthy
 echo "==> Waiting for backend to initialize and seed database..."
 for i in {1..30}; do
+  if ! kill -0 "$BACKEND_PID" 2>/dev/null; then
+    echo "==> ERROR: FastAPI backend process died during startup! Exiting..."
+    exit 1
+  fi
   if curl -s http://127.0.0.1:8000/health > /dev/null 2>&1; then
     echo "==> Backend is healthy and ready!"
     break
