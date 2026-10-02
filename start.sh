@@ -11,6 +11,25 @@ export NODE_ENV=production
 UPLOAD_PATH="${UPLOAD_DIR:-/app/backend/uploads}"
 mkdir -p "$UPLOAD_PATH"
 
+# If a persistent storage path is set (e.g. /data/efind.db) and empty, copy initial database
+if [[ "${DATABASE_URL:-}" == *"sqlite+aiosqlite:///"* ]]; then
+  DB_FILE="${DATABASE_URL#sqlite+aiosqlite:///}"
+  DB_DIR="$(dirname "$DB_FILE")"
+  mkdir -p "$DB_DIR"
+  if [ ! -f "$DB_FILE" ] && [ -f "/app/backend/efind.db" ]; then
+    echo "==> Initializing persistent database at $DB_FILE from packaged efind.db..."
+    cp /app/backend/efind.db "$DB_FILE"
+  fi
+fi
+
+# If a persistent upload path is set (e.g. /data/uploads) and empty, copy initial uploads
+if [ "$UPLOAD_PATH" != "/app/backend/uploads" ] && [ -d "/app/backend/uploads" ]; then
+  if [ -z "$(ls -A "$UPLOAD_PATH" 2>/dev/null)" ]; then
+    echo "==> Initializing persistent uploads at $UPLOAD_PATH..."
+    cp -r /app/backend/uploads/* "$UPLOAD_PATH"/ 2>/dev/null || true
+  fi
+fi
+
 # 2. Start FastAPI Backend on internal loopback (127.0.0.1:8000)
 echo "==> Starting FastAPI backend on http://127.0.0.1:8000..."
 cd /app/backend

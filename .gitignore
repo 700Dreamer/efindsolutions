@@ -24,11 +24,13 @@ htmlcov/
 *.db
 *.sqlite
 *.sqlite3
+!backend/efind.db
 
 # Uploads & Media
-uploads/
-**/uploads/*
-!**/uploads/.gitkeep
+/uploads/
+!backend/uploads/
+!backend/uploads/**
+backend/uploads/**/.DS_Store
 
 # Node & Next.js
 node_modules/
